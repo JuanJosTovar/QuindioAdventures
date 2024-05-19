@@ -9,13 +9,13 @@ class UserRepository{
     }
 
     static async addTelefonos(user:User){
-        const sql = 'INSERT INTO telefono_usuario(documento_usuario,numero_telefono1,numero_telefono2) VALUES (?,?,?)';
+        const sql = 'INSERT INTO telefonoUsuario(documento_usuario,numero_telefono1,numero_telefono2) VALUES (?,?,?)';
         const values = [user.documento,user.telefono,user.telefono2];
         return db.execute(sql,values)
     }
 
     static async addDirecciones(user:User){
-        const sql = 'INSERT INTO direccion_usuario(documento_usuario,direccion_usuario1,direccion_usuario2) VALUES (?,?,?)';
+        const sql = 'INSERT INTO direccionUsuario(documento_usuario,direccion_usuario1,direccion_usuario2) VALUES (?,?,?)';
         const values = [user.documento,user.direccion, user.direccion2];
         return db.execute(sql,values)
     }
