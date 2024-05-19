@@ -13,7 +13,7 @@ class UserService {
         return await UserRepository.addTelefonos(user);
     }
 
-    static async registerdirecciones(user : User){
+    static async registerDirecciones(user : User){
         return await UserRepository.addDirecciones(user);
     }
 }
