@@ -18,29 +18,23 @@ let register = async (req: Request, res: Response) => {
             direccion2
         } = req.body;
 
-        // Validar que al menos un teléfono y una dirección sean proporcionados
         if ((!telefono && !telefono2) || (!direccion && !direccion2)) {
             return res.status(400).send({ error: 'Debe proporcionar al menos un teléfono y una dirección.' });
         }
 
         let user: User = new User(documento, email, nombres, apellidos, edad, telefono || null, telefono2 || null, direccion || null, direccion2 || null, password);
 
-        // Registrar el usuario
         await UserService.register(user);
 
-        // Registrar teléfonos si se proporcionaron
         if (telefono || telefono2) {
             await UserService.registerTelefonos(user);
         }
 
-        // Registrar direcciones si se proporcionaron
         if (direccion || direccion2) {
             await UserService.registerDirecciones(user);
         }
 
-        // Enviar correo de confirmación
         async function mailer() {
-            // send mail with defined transport object
             const info = await transporter.sendMail({
                 from: '"Autenticación exitosa 👻" <camilobalsero16@gmail.com>', // sender address
                 to: email, // list of receivers

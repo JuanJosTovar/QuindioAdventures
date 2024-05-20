@@ -1,5 +1,6 @@
 import db from '../config/config-db';
 import User from "../Dto/UserDto";
+import Auth from '../Dto/AuthDto';
 
 class UserRepository {
     static async add(user: User) {
@@ -9,7 +10,6 @@ class UserRepository {
     }
 
     static async addTelefonos(user: User) {
-        // Asegurarse de pasar null en lugar de undefined
         const telefono1 = user.telefono || null;
         const telefono2 = user.telefono2 || null;
         if (telefono1 || telefono2) {
@@ -20,7 +20,6 @@ class UserRepository {
     }
 
     static async addDirecciones(user: User) {
-        // Asegurarse de pasar null en lugar de undefined
         const direccion1 = user.direccion || null;
         const direccion2 = user.direccion2 || null;
         if (direccion1 || direccion2) {
@@ -28,6 +27,12 @@ class UserRepository {
             const values = [user.documento, direccion1, direccion2];
             return db.execute(sql, values);
         }
+    }
+
+    static async login(auth: Auth){
+        const sql = 'SELECT password FROM usuario WHERE email=?';
+        const values = [auth.email];
+        return db.execute(sql, values);
     }
 }
 
