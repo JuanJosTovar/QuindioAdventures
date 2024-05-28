@@ -3,6 +3,11 @@ import User from "../Dto/UserDto";
 import Auth from '../Dto/AuthDto';
 
 class UserRepository {
+    static async perfilUsuario(email: String) {
+        const sql = 'SELECT * FROM usuario WHERE email = ? ';
+        const values = [email];
+        return db.execute(sql, values);
+    }
     static async add(user: User) {
         const sql = 'INSERT INTO usuario(documento, email, password, nombres, apellidos, edad) VALUES (?,?,?,?,?,?)';
         const values = [user.documento, user.email, user.password, user.nombres, user.apellidos, user.edad];
@@ -34,6 +39,13 @@ class UserRepository {
         const values = [auth.email];
         return db.execute(sql, values);
     }
+
+    static async resetPassword(email: string, newPasswordHash: string) {
+        const sql = 'UPDATE usuario SET password = ? WHERE email = ?';
+        const values = [newPasswordHash, email];
+        return db.execute(sql, values);
+    }
+
 }
 
 export default UserRepository;
